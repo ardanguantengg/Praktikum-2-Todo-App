@@ -1,44 +1,47 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import React, { useState } from 'react';
+import { Input } from '@/app/components/ui/input';
+import { Button } from '@/app/components/ui/button';
 
-export default function TodoForm() {
-  const [title, setTitle] = useState("");
+type TodoFormProps = {
+  onAddTodo: (title: string) => void;
+};
 
-  function handleSubmit(e: React.FormEvent) {
+export default function TodoForm({ onAddTodo }: TodoFormProps) {
+  const [title, setTitle] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!title.trim()) return;
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return;
 
-    alert("Todo berhasil ditambahkan!");
-    setTitle("");
-  }
+    onAddTodo(trimmedTitle);
+    setTitle('');
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mb-8 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm"
-    >
-      <h2 className="mb-4 text-lg font-semibold">
-        Tambah Todo
-      </h2>
-
-      <div className="flex gap-3">
-        <input
+    <div className="mb-6 bg-white p-4 rounded-xl border border-gray-70">
+      <form onSubmit={handleSubmit} className="flex gap-2" autoComplete="off">
+        <Input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Masukkan todo..."
-          className="flex-1 rounded-lg border border-zinc-300 px-4 py-3 outline-none"
+          placeholder="Tambahkan tugas baru..."
+          className="flex-1 bg-white"
+          variantSize="md"
+          autoComplete="off"
         />
-
-        <button
+        <Button
           type="submit"
-          className="rounded-lg bg-blue-600 px-5 py-3 font-medium text-white"
+          disabled={!title.trim()}
+          variant="default"
+          size="md"
         >
           Tambah
-        </button>
-      </div>
-    </form>
+        </Button>
+      </form>
+    </div>
   );
 }

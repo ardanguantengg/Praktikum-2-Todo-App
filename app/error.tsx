@@ -1,6 +1,6 @@
 "use client";
 
-export default function ErrorPage({
+export default function Error({
   error,
   reset,
 }: {
@@ -8,21 +8,9 @@ export default function ErrorPage({
   reset: () => void;
 }) {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "16px",
-      }}
-    >
+    <div>
       <h2>Something went wrong!</h2>
-
-      <button onClick={() => reset()}>
-        Try again
-      </button>
+      <button onClick={() => reset()}>Try again</button>
     </div>
   );
 }

@@ -9,6 +9,7 @@ export default async function TaskPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
   const todo = await getTodoById(Number(id));
 
   if (!todo) {
@@ -20,7 +21,7 @@ export default async function TaskPage({
       <div className="mx-auto max-w-2xl">
         <Link
           href="/"
-          className="mb-6 inline-block text-blue-600 hover:underline"
+          className="mb-6 inline-block text-sm font-medium text-blue-600 hover:underline"
         >
           ← Kembali ke Todo List
         </Link>

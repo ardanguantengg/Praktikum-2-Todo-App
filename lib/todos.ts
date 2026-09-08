@@ -4,19 +4,19 @@ export const todos: Todo[] = [
   {
     id: 1,
     title: "Belajar Next.js",
-    description: "Mempelajari Next.js App Router dan Server Component.",
+    description: "Mempelajari Next.js App Router.",
     completed: false,
   },
   {
     id: 2,
     title: "Mengerjakan Praktikum 2",
-    description: "Menyelesaikan tugas Todo App menggunakan Next.js.",
+    description: "Menyelesaikan tugas Todo App.",
     completed: true,
   },
   {
     id: 3,
     title: "Push ke GitHub",
-    description: "Upload project Praktikum 2 ke GitHub.",
+    description: "Upload project ke GitHub.",
     completed: false,
   },
 ];

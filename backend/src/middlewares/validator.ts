@@ -1,55 +1,105 @@
 import express from 'express';
+import { sendError } from '../utils/response';
 
 type Request = express.Request;
 type Response = express.Response;
 type NextFunction = express.NextFunction;
 
-// Validator praktikum sebelumnya – Validasi register
-export const validateRegister = (req: Request, res: Response, next: NextFunction): void => {
+// Validasi register
+export const validateRegister = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const { username, password } = req.body;
+
   if (!username || !password) {
-    res.status(400).json({ success: false, message: 'Username dan password wajib diisi!' });
+    sendError(
+      res,
+      400,
+      'Username dan password wajib diisi!'
+    );
     return;
   }
+
   next();
 };
 
-// Validator praktikum sebelumnya – Validasi login
-export const validateLogin = (req: Request, res: Response, next: NextFunction): void => {
+// Validasi login
+export const validateLogin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const { username, password } = req.body;
+
   if (!username || !password) {
-    res.status(400).json({ success: false, message: 'Username dan password wajib diisi!' });
+    sendError(
+      res,
+      400,
+      'Username dan password wajib diisi!'
+    );
     return;
   }
+
   next();
 };
 
-// Validator praktikum sebelumnya – Validasi saat tambah todo
-export const validateTodo = (req: Request, res: Response, next: NextFunction): void => {
+// Validasi saat tambah todo
+export const validateTodo = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const { task } = req.body;
+
   if (!task || typeof task !== 'string') {
-    res.status(400).json({ success: false, message: 'Task wajib diisi dan harus berupa string!' });
+    sendError(
+      res,
+      400,
+      'Task wajib diisi dan harus berupa string!'
+    );
     return;
   }
+
   next();
 };
 
-// Langkah 3: Validasi untuk update todo
-export const validateUpdateTodo = (req: Request, res: Response, next: NextFunction): void => {
+// Validasi saat update todo
+export const validateUpdateTodo = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const { task, is_completed } = req.body;
 
   if (task === undefined && is_completed === undefined) {
-    res.status(400).json({ success: false, message: 'Isi minimal task atau is_completed!' });
+    sendError(
+      res,
+      400,
+      'Isi minimal task atau is_completed!'
+    );
     return;
   }
 
   if (task !== undefined && typeof task !== 'string') {
-    res.status(400).json({ success: false, message: 'Task harus berupa string!' });
+    sendError(
+      res,
+      400,
+      'Task harus berupa string!'
+    );
     return;
   }
 
-  if (is_completed !== undefined && typeof is_completed !== 'boolean') {
-    res.status(400).json({ success: false, message: 'is_completed harus berupa true atau false!' });
+  if (
+    is_completed !== undefined &&
+    typeof is_completed !== 'boolean'
+  ) {
+    sendError(
+      res,
+      400,
+      'is_completed harus berupa true atau false!'
+    );
     return;
   }
 

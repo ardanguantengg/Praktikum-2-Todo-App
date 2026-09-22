@@ -1,23 +1,42 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import type { JwtUserPayload } from '../types';
+import { sendError } from '../utils/response';
 
 dotenv.config();
 
-export const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+export const verifyToken = (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+): void => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-        res.status(401).json({ success: false, message: 'Akses ditolak. Token tidak ditemukan!' });
+        sendError(
+            res,
+            401,
+            'Akses ditolak. Token tidak ditemukan!'
+        );
         return;
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
-        res.locals.userId = decoded.id;
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET as string
+        ) as JwtUserPayload;
+
+        req.user = decoded;
+
         next();
     } catch (error) {
-        res.status(403).json({ success: false, message: 'Sesi tidak valid atau kedaluwarsa!' });
+        sendError(
+            res,
+            403,
+            'Sesi tidak valid atau kedaluwarsa!'
+        );
     }
 };
